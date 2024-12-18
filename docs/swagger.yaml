@@ -1,0 +1,125 @@
+definitions:
+  common.CreateUserRequest:
+    properties:
+      email:
+        example: dog@gmail.com
+        type: string
+      myCustomKey:
+        example: 1234
+        type: integer
+      name:
+        example: Khem
+        type: string
+      password:
+        example: "1234567"
+        type: string
+    required:
+    - email
+    - myCustomKey
+    - name
+    - password
+    type: object
+  common.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  common.SuccessResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  models.User:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      updated_at:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /users:
+    post:
+      consumes:
+      - application/json
+      description: This endpoint creates a new user with the provided details.
+      parameters:
+      - description: User details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/common.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+      summary: Create a new user
+      tags:
+      - users
+  /users/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: This endpoint deletes.
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+      summary: Delete user
+      tags:
+      - users
+    get:
+      consumes:
+      - application/json
+      description: This is description
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+      summary: Get User by ID
+      tags:
+      - users
+swagger: "2.0"
